@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject ultimaBarraIzquierda;
     [SerializeField] GameObject ultimaBarraDerecha;
     [Tooltip("Entre mayor sea, menor es el ancho de las ondas")]
-    [SerializeField, Range(0, 5)] float frecuenciaX;
+    [SerializeField, Range(0, 1)] float frecuenciaX;
     [Tooltip("Entre mayor sea, mayor el alto de las ondas")]
-    [SerializeField, Range(0, 5)] float magnitudY;
+    [SerializeField, Range(0, 1)] float magnitudY;
 
 
 
@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
         foreach (GameObject barra in barras)
         {
             //Se mueve con "sin"
-            float posY = barra.transform.position.x * Mathf.Sin(frecuenciaX) * magnitudY;
+            //float posY = barra.transform.position.x * Mathf.Sin(frecuenciaX) * magnitudY;
+            float posY = Mathf.Sin(barra.transform.position.x * frecuenciaX) * magnitudY;
             barra.transform.position = new Vector3(barra.transform.position.x, posY, barra.transform.position.z);
             //Settear alturas minimas y maximas
             MovimientoVertical barraScript = barra.GetComponent<MovimientoVertical>();
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour
             barraScript.alturaMaxima = 3.5f;
 
         }
-        Debug.Log("Funcionado");
         
 
 
