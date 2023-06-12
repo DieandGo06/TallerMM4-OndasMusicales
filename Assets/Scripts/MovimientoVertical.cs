@@ -9,21 +9,25 @@ public class MovimientoVertical : MonoBehaviour
 
     [Header("Basicos")]
     public Estado estado;
-    [Range(0, 20)] public float velocidad;
+    [Range(0, 20)] public float velocidadSubida;
+    [Range(0, 20)] public float velocidadBajada;
     [Range(-5.5f, 4.5f)] public float alturaMinima;
     [Range(-5.5f, 4.5f)] public float alturaMaxima;
     [Range(0, 0.5f)] public float rangoVariacionAltura;
 
     [Space(10)]
     [Header("Avanzados")]
+    //[Range(-2, 2)] public float aceleracionInicialSubida;
     [Range(0, 2)] public float tiempoSostenidoEnMinimo;
     [Range(0, 2)] public float tiempoSostenidoEnMaximo;
 
 
+
     Rigidbody2D rBody;
-    private float alturaRelativa;
-    private float variacionAltura;
-    private float alturaMinimaPantalla = -8;
+    //private float alturaMinimaPantalla = -8;
+    [HideInInspector] public float variacionAltura;
+    //private float duracionDeAceleracionInicial = 0.5f;
+    private float cronometro;
 
 
 
@@ -35,6 +39,8 @@ public class MovimientoVertical : MonoBehaviour
     private void Start()
     {
         estado = Estado.sube;
+        if (rangoVariacionAltura == 0) variacionAltura = 0;
+        else variacionAltura = Random.Range(-rangoVariacionAltura, rangoVariacionAltura);
     }
 
     private void FixedUpdate()
@@ -47,34 +53,44 @@ public class MovimientoVertical : MonoBehaviour
     {
         if (estado == Estado.sube)
         {
+            //Acelaracion Inicial
+            //if ()
+
+            //Tiempo sostenido en la altura maxima
             if (transform.position.y >= alturaMaxima + variacionAltura)
             {
                 estado = Estado.sostenido;
                 yield return new WaitForSeconds(tiempoSostenidoEnMaximo);
-                variacionAltura = Random.Range(-rangoVariacionAltura, rangoVariacionAltura);
                 estado = Estado.baja;
                 yield break;
             }
-            rBody.MovePosition(transform.position + (velocidad * Vector3.up * Time.deltaTime));
+            //Movimiento 
+            rBody.MovePosition(transform.position + (velocidadSubida * Vector3.up * Time.deltaTime));
             if (estado == Estado.baja) Debug.LogWarning("ESTE MENSAJE NO DEBRIA VERSE");
             yield break;
         }
 
         if (estado == Estado.baja)
         {
+            //Tiempo sostenido en la altura minima
             if (transform.position.y <= alturaMinima + variacionAltura)
             {
                 estado = Estado.sostenido;
                 yield return new WaitForSeconds(tiempoSostenidoEnMinimo);
-                variacionAltura = Random.Range(-rangoVariacionAltura, rangoVariacionAltura);
                 estado = Estado.sube;
                 yield break;
             }
-            rBody.MovePosition(transform.position - (velocidad * Vector3.up * Time.deltaTime));
+            //Movimiento
+            rBody.MovePosition(transform.position - (velocidadBajada * Vector3.up * Time.deltaTime));
             if (estado == Estado.sube) Debug.LogWarning("ESTE MENSAJE NO DEBRIA VERSE");
             yield break;
         }
         yield return null;
+    } 
+
+    void Acelerar()
+    {
+
     }
 
 
