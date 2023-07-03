@@ -7,6 +7,9 @@ public class VanidadManager : MonoBehaviour
     public static VanidadManager instance;
     [Range(0, 1f)] public float diferenciaAltura;
 
+    [Header("Barras elegidas")]
+    public BarraMovimiento[] barrasElegidas = new BarraMovimiento[5];
+
     //privadas
     List<BarraMovimiento> barrasScript = new List<BarraMovimiento>();
     int barraColisionadaIndex;
@@ -21,7 +24,7 @@ public class VanidadManager : MonoBehaviour
 
     private void Start()
     {
-        //GameManager.instance.puntero.punteroColisiono.AddListener(CollisionEnter);
+        GameManager.instance.puntero.punteroColisiono.AddListener(CollisionEnter);
         //GameManager.instance.puntero.punteroMantieneColision.AddListener(CollisionStay);
 
 
@@ -34,6 +37,22 @@ public class VanidadManager : MonoBehaviour
 
     void CollisionEnter(Collider2D colliderBarra)
     {
+        ElegirBarras(colliderBarra);
+        foreach (BarraMovimiento barra in barrasScript)
+        {
+            //Si una de las barras es una de las elegidas
+            foreach (BarraMovimiento barraElegida in barrasElegidas)
+            {
+                if (barra == barraElegida)
+                {
+                    return;
+                }
+            }
+
+
+        }
+
+        /*
         barraColisionadaIndex = GameManager.instance.barras.FindIndex(a => a == colliderBarra.gameObject);
 
         //Barra Principal
@@ -67,12 +86,13 @@ public class VanidadManager : MonoBehaviour
             }
 
         }
+        */
     }
 
     private void CollisionStay(Collider2D colliderBarra)
     {
         //Barra Principal
-        barrasScript[barraColisionadaIndex].heightTarget = GameManager.instance.punteroPosition.y *1.5f;
+        barrasScript[barraColisionadaIndex].heightTarget = GameManager.instance.punteroPosition.y * 1.5f;
 
         for (int i = 0; i < barrasScript.Count - 1; i++)
         {
@@ -86,6 +106,57 @@ public class VanidadManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    void ElegirBarras(Collider2D colliderBarra)
+    {
+        barraColisionadaIndex = GameManager.instance.barras.FindIndex(a => a == colliderBarra.gameObject);
+        if (barraColisionadaIndex >= 2 && barraColisionadaIndex <= barrasScript.Count - 3)
+        {
+            barrasElegidas[0] = barrasScript[barraColisionadaIndex - 2];
+            barrasElegidas[1] = barrasScript[barraColisionadaIndex - 1];
+            barrasElegidas[2] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[3] = barrasScript[barraColisionadaIndex + 1];
+            barrasElegidas[4] = barrasScript[barraColisionadaIndex + 2];
+            return;
+        }
+        else if (barraColisionadaIndex == 0)
+        {
+            barrasElegidas[0] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[1] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[2] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[3] = barrasScript[barraColisionadaIndex + 1];
+            barrasElegidas[4] = barrasScript[barraColisionadaIndex + 2];
+            return;
+        }
+        else if (barraColisionadaIndex == 1)
+        {
+            barrasElegidas[0] = barrasScript[barraColisionadaIndex - 1];
+            barrasElegidas[1] = barrasScript[barraColisionadaIndex - 1];
+            barrasElegidas[2] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[3] = barrasScript[barraColisionadaIndex + 1];
+            barrasElegidas[4] = barrasScript[barraColisionadaIndex + 2];
+            return;
+        }
+        else if (barraColisionadaIndex == barrasScript.Count - 1)
+        {
+            barrasElegidas[0] = barrasScript[barraColisionadaIndex - 2];
+            barrasElegidas[1] = barrasScript[barraColisionadaIndex - 1];
+            barrasElegidas[2] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[3] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[4] = barrasScript[barraColisionadaIndex];
+            return;
+        }
+        else if (barraColisionadaIndex == barrasScript.Count - 2)
+        {
+            barrasElegidas[0] = barrasScript[barraColisionadaIndex - 2];
+            barrasElegidas[1] = barrasScript[barraColisionadaIndex - 1];
+            barrasElegidas[2] = barrasScript[barraColisionadaIndex];
+            barrasElegidas[3] = barrasScript[barraColisionadaIndex + 1];
+            barrasElegidas[4] = barrasScript[barraColisionadaIndex];
+            return;
+        }
+
     }
 
     void RegresarEstadoA(Collider2D colliderBarra)
