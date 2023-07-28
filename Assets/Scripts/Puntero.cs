@@ -9,19 +9,21 @@ public class Puntero : MonoBehaviour
     Rigidbody2D rb;
     bool isMousePressed;
     public Vector2 posicion;
-    
-    public UnityEvent<Collider2D> punteroColisiono;
-    public UnityEvent<Collider2D> punteroMantieneColision;
-    public UnityEvent<Collider2D> punteroColisionTerminada;
+
+    [HideInInspector] public UnityEvent PunteroPressed;
+    [HideInInspector] public UnityEvent<Barra> PunteroTriggerEnter;
+    [HideInInspector] public UnityEvent<Barra> PunteroTriggerStay;
+    [HideInInspector] public UnityEvent<Barra> PunteroTriggerExit;
 
 
 
 
     private void Awake()
     {
-        punteroColisiono = new UnityEvent<Collider2D>();
-        punteroMantieneColision = new UnityEvent<Collider2D>();
-        punteroColisionTerminada = new UnityEvent<Collider2D>();
+        PunteroPressed = new UnityEvent();
+        PunteroTriggerEnter = new UnityEvent<Barra>();
+        PunteroTriggerStay = new UnityEvent<Barra>();
+        PunteroTriggerExit = new UnityEvent<Barra>();
     }
 
     void Start()
@@ -36,11 +38,14 @@ public class Puntero : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isMousePressed = true;
+            PunteroPressed.Invoke();
         }
         else if (Input.GetMouseButtonUp(0))
         {
             isMousePressed = false;
+            transform.position = new Vector3(-10, 0, 0);
             GameManager.instance.hayInterccion = false;
+            GameManager.instance.RegresarColorFondo();
         }
 
         if (isMousePressed)
@@ -65,16 +70,28 @@ public class Puntero : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        punteroColisiono.Invoke(collision);
+        if (collision.GetComponent<Barra>() != null)
+        {
+            Barra barraScript = collision.GetComponent<Barra>();
+            PunteroTriggerEnter.Invoke(barraScript);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        punteroMantieneColision.Invoke(collision);
+        if (collision.GetComponent<Barra>() != null)
+        {
+            Barra barraScript = collision.GetComponent<Barra>();
+            PunteroTriggerStay.Invoke(barraScript);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        punteroColisionTerminada.Invoke(collision);
+        if (collision.GetComponent<Barra>() != null)
+        {
+            Barra barraScript = collision.GetComponent<Barra>();
+            PunteroTriggerExit.Invoke(barraScript);
+        }
     }
 }

@@ -7,9 +7,8 @@ public class DesinteresManager : MonoBehaviour
 {
     public static DesinteresManager instance;
     [Range(0, 1f)] public float diferenciaAltura;
+    int indexBarraColisionada;
 
-    //privadas
-    List<BarraMovimiento> barrasScript = new List<BarraMovimiento>();
 
 
 
@@ -21,34 +20,77 @@ public class DesinteresManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.puntero.punteroMantieneColision.AddListener(ReorganizarBarras);
+        indexBarraColisionada = 0;
+        GameManager.instance.puntero.PunteroTriggerEnter.AddListener(CollisionEnter);
+        GameManager.instance.puntero.PunteroTriggerStay.AddListener(ReorganizarBarras);
+    }
 
-        foreach (GameObject script in GameManager.instance.barras)
+    private void Update()
+    {
+        foreach (Barra barra in GameManager.instance.barras)
         {
-            barrasScript.Add(script.GetComponent<BarraMovimiento>());
+            if (!GameManager.instance.hayInterccion)
+            {
+                if (barra.esProtagonista)
+                {
+                    barra.GetValoresEstadoA();
+                }
+                else
+                {
+                    //Recien terminar la interaccion
+                    if (barra.movimiento == Barra.Movimiento.manual)
+                    {
+                        barra.movimiento = Barra.Movimiento.automatico;
+                        barra.direccion = Barra.Direccion.baja;
+                        barra.GetValoresEstadoA();
+                        barra.velocidadBajada = 10f;
+                        barra.estado = Barra.Estado.transicion;
+                        return;
+                    }
+                    //Tras la bajada acelerada al terminar la interaccion
+                    if (barra.direccion == Barra.Direccion.sube && barra.estado == Barra.Estado.transicion)
+                    {
+                        barra.GetValoresEstadoA();
+                    }
+                }
+            }
         }
     }
 
 
-    void ReorganizarBarras(Collider2D colliderBarra)
+    void CollisionEnter(Barra barraColisionada)
     {
-        int index = GameManager.instance.barras.FindIndex(a => a == colliderBarra.gameObject);
+        GetIndexBarraColisionada(barraColisionada);
+        foreach (Barra barra in GameManager.instance.barras)
+        {
+            barra.GetValoresEstadoB();
+            if (!barra.esProtagonista)
+            {
+                barra.movimiento = Barra.Movimiento.manual;
+            }
+        }
+    }
 
+    void GetIndexBarraColisionada(Barra barraColisionada)
+    {
+        indexBarraColisionada = GameManager.instance.barras.FindIndex(a => a == barraColisionada);
+    }
+
+    void ReorganizarBarras(Barra barraColisionada)
+    {
         //Barra Principal
-        barrasScript[index].heightTarget = GameManager.instance.punteroPosition.y;
+        GameManager.instance.barras[indexBarraColisionada].heightTarget = GameManager.instance.punteroPosition.y;
 
         //Barras a la izquierda
-        for (int i = index-1; i >= 0; i--)
+        for (int i = indexBarraColisionada-1; i >= 0; i--)
         {
-            barrasScript[i].heightTarget = GameManager.instance.punteroPosition.y - ((index-i) * diferenciaAltura);
+            GameManager.instance.barras[i].heightTarget = GameManager.instance.punteroPosition.y - ((indexBarraColisionada-i) * diferenciaAltura);
         }
         //Barras a la derecha
-        for (int i = index + 1; i < GameManager.instance.barras.Count; i++)
+        for (int i = indexBarraColisionada + 1; i < GameManager.instance.barras.Count; i++)
         {
-            barrasScript[i].heightTarget = GameManager.instance.punteroPosition.y - ((i-index) * diferenciaAltura);
+            GameManager.instance.barras[i].heightTarget = GameManager.instance.punteroPosition.y - ((i-indexBarraColisionada) * diferenciaAltura);
         }
-
-
     }
 
 }

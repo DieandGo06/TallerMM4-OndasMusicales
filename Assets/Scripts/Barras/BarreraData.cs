@@ -25,4 +25,23 @@ public class BarreraData : ScriptableObject
     [Range(0, 1f)] public float rangoVariacionAltura_B;
     [Range(0, 2)] public float tiempoSostenidoEnMinimo_B;
     [Range(0, 2)] public float tiempoSostenidoEnMaximo_B;
+
+    public void CopyDataFrom(BarreraData anotherData)
+    {
+        alturaMin_A = anotherData.alturaMin_A;
+        alturaMax_A = anotherData.alturaMax_A;
+        velocidadSubida_A = anotherData.velocidadSubida_A;
+        velocidadBajada_A = anotherData.velocidadBajada_A;
+        rangoVariacionAltura_A = anotherData.rangoVariacionAltura_A;
+        tiempoSostenidoEnMinimo_A = anotherData.tiempoSostenidoEnMinimo_A;
+        tiempoSostenidoEnMaximo_A = anotherData.tiempoSostenidoEnMaximo_A;
+
+        alturaMin_B = anotherData.alturaMin_B;
+        alturaMax_B = anotherData.alturaMax_B;
+        velocidadSubida_B = anotherData.velocidadSubida_B;
+        velocidadBajada_B = anotherData.velocidadBajada_B;
+        rangoVariacionAltura_B = anotherData.rangoVariacionAltura_B;
+        tiempoSostenidoEnMinimo_B = anotherData.tiempoSostenidoEnMinimo_B;
+        tiempoSostenidoEnMaximo_B = anotherData.tiempoSostenidoEnMaximo_B;
+    }
 }

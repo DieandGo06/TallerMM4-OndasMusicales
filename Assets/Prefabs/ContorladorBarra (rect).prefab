@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5948860512641709326}
   - component: {fileID: 5948860512641709327}
   - component: {fileID: 5948860512641709324}
-  - component: {fileID: 7195708286420895548}
   m_Layer: 0
   m_Name: ContorladorBarra (rect)
   m_TagString: Untagged
@@ -148,9 +147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7587ed745604246a60ccb56f49f949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   estadoInteraccion: 0
-  estado: 0
+  movimiento: 0
+  direccion: 0
   alturaActual: 0
+  heightTarget: 0
+  esProtagonista: 0
   alturaMin: 0
   alturaMax: 0
   velocidadSubida: 0
@@ -159,20 +162,6 @@ MonoBehaviour:
   tiempoSostenidoEnMinimo: 0
   tiempoSostenidoEnMaximo: 0
   variacionAltura: 0
---- !u!114 &7195708286420895548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5948860512641709325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd311b7271d53094aa0b97c9c6d05aff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 0}
-  movimiento: {fileID: 5948860512641709324}
 --- !u!1 &5948860513515824022
 GameObject:
   m_ObjectHideFlags: 0

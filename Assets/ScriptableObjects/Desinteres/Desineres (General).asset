@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Desineres (General)
   m_EditorClassIdentifier: 
   alturaMin_A: -4
-  alturaMax_A: -3.5
-  velocidadSubida_A: 1.8
-  velocidadBajada_A: 1.6
-  rangoVariacionAltura_A: 0.502
+  alturaMax_A: -3
+  velocidadSubida_A: 0.9
+  velocidadBajada_A: 0.7
+  rangoVariacionAltura_A: 0.1
   tiempoSostenidoEnMinimo_A: 0
   tiempoSostenidoEnMaximo_A: 0
   alturaMin_B: -4.5

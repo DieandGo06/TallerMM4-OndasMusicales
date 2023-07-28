@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Desineres Protagonista
   m_EditorClassIdentifier: 
   alturaMin_A: -4
-  alturaMax_A: -3.5
+  alturaMax_A: -3
   velocidadSubida_A: 0.8
-  velocidadBajada_A: 0.6
+  velocidadBajada_A: 0.7
   rangoVariacionAltura_A: 0.25
-  tiempoSostenidoEnMinimo_A: 0.3
+  tiempoSostenidoEnMinimo_A: 0.2
   tiempoSostenidoEnMaximo_A: 0.2
   alturaMin_B: -4
-  alturaMax_B: -3.5
+  alturaMax_B: -3
   velocidadSubida_B: 0.8
-  velocidadBajada_B: 0.6
+  velocidadBajada_B: 0.7
   rangoVariacionAltura_B: 0.25
-  tiempoSostenidoEnMinimo_B: 0.3
+  tiempoSostenidoEnMinimo_B: 0.2
   tiempoSostenidoEnMaximo_B: 0.2

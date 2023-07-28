@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum Pantallas { Acoso, Desamparo, Desinteres, Empatia, Mediacion, Proteccion, Timidez, Vanidad, Xenofobia };
     public static GameManager instance;
+    public enum Concepto { Acoso, Desamparo, Desinteres, Empatia, Mediacion, Proteccion, Timidez, Vanidad, Xenofobia };
 
 
     [Header("General")]
-    public List<GameObject> barras = new List<GameObject>();
-    public Pantallas pantallas;
-    public GameObject protoganista;
+    public List<Barra> barras = new List<Barra>();
+    public Concepto concepto;
+    public Barra protoganista;
+    public Color fondoInicial;
+
+    [Header("Puntero - Modo manual")]
     public Puntero puntero;
     public Vector2 punteroPosition;
     public bool hayInterccion;
@@ -33,6 +36,8 @@ public class GameManager : MonoBehaviour
     {
         posicionXPrimeraBarra = -8.28f;
         separacionHorizontal = 0.315f;
+        Application.targetFrameRate = 30;
+        fondoInicial = Camera.main.backgroundColor;
     }
 
 
@@ -41,11 +46,21 @@ public class GameManager : MonoBehaviour
     void OrganizarHorizontalmente()
     {
         float nuevaPosicion = posicionXPrimeraBarra;
-        foreach (GameObject barra in barras)
+        foreach (Barra barra in barras)
         {
             barra.transform.position = new Vector3(nuevaPosicion, barra.transform.position.y, barra.transform.position.z);
             nuevaPosicion += barra.transform.localScale.x + separacionHorizontal;
         }
+    }
+
+    public void RegresarColorFondo()
+    {
+        Camera.main.backgroundColor = fondoInicial;
+    }
+
+    public void CambiarColorFondo(Color newColor)
+    {
+        Camera.main.backgroundColor = newColor;
     }
 
 
