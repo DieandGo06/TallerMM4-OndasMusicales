@@ -23,6 +23,7 @@ public class VanidadManager : MonoBehaviour
     {
 
         GameManager.instance.puntero.PunteroTriggerEnter.AddListener(CollisionEnter);
+        GameManager.instance.puntero.Released.AddListener(RegresarFondoA);
         //GameManager.instance.puntero.punteroMantieneColision.AddListener(CollisionStay);
     }
 
@@ -98,26 +99,8 @@ public class VanidadManager : MonoBehaviour
     }
     #endregion
 
-
-
-    void RegresarEstadoA(Collider2D colliderBarra)
+    void RegresarFondoA()
     {
-        int index = GameManager.instance.barras.FindIndex(a => a == colliderBarra.gameObject);
-        GameObject barraColisionExit = GameManager.instance.barras[index].gameObject;
-
-        for (int i = index - 2; i < index + 2; i++)
-        {
-            if (i < 0) return;
-            if (i >= GameManager.instance.barras.Count) return;
-
-
-            Tareas.Nueva(2, () =>
-            {
-                //movimiento[i].estado = Barra.Estado.baja;
-                //movimiento[i].gameObject.GetComponent<BarraInteraccion>().GetValoresEstadoA();
-            });
-        }
-
-
+        GameManager.instance.CambiarFondo(GameManager.instance.fondoA);
     }
 }

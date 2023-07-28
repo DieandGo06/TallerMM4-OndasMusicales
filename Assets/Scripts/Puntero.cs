@@ -10,7 +10,10 @@ public class Puntero : MonoBehaviour
     bool isMousePressed;
     public Vector2 posicion;
 
-    [HideInInspector] public UnityEvent PunteroPressed;
+
+    [HideInInspector] public UnityEvent Pressed;
+    [HideInInspector] public UnityEvent Released;
+
     [HideInInspector] public UnityEvent<Barra> PunteroTriggerEnter;
     [HideInInspector] public UnityEvent<Barra> PunteroTriggerStay;
     [HideInInspector] public UnityEvent<Barra> PunteroTriggerExit;
@@ -20,7 +23,8 @@ public class Puntero : MonoBehaviour
 
     private void Awake()
     {
-        PunteroPressed = new UnityEvent();
+        Pressed = new UnityEvent();
+        Released = new UnityEvent();
         PunteroTriggerEnter = new UnityEvent<Barra>();
         PunteroTriggerStay = new UnityEvent<Barra>();
         PunteroTriggerExit = new UnityEvent<Barra>();
@@ -38,14 +42,14 @@ public class Puntero : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isMousePressed = true;
-            PunteroPressed.Invoke();
+            Pressed.Invoke();
         }
         else if (Input.GetMouseButtonUp(0))
         {
             isMousePressed = false;
             transform.position = new Vector3(-10, 0, 0);
             GameManager.instance.hayInterccion = false;
-            GameManager.instance.RegresarColorFondo();
+            Released.Invoke();
         }
 
         if (isMousePressed)
@@ -55,7 +59,7 @@ public class Puntero : MonoBehaviour
             GameManager.instance.hayInterccion = true;
             rb.MovePosition(posicion);
         }
-        
+
 #endif
 
 #if UNITY_ANDROID

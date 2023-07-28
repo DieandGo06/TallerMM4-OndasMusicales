@@ -19,7 +19,8 @@ public class AcosoManager : MonoBehaviour
     private void Start()
     {
         GameManager.instance.protoganista.data.CopyDataFrom(dataInicialProta);
-        GameManager.instance.puntero.PunteroPressed.AddListener(PunteroPressed);
+        GameManager.instance.puntero.Pressed.AddListener(PunteroPressed);
+        GameManager.instance.puntero.Released.AddListener(RegresarFondoA);
         GameManager.instance.puntero.PunteroTriggerStay.AddListener(ReorganizarBarras);
         indexProtagonista = GameManager.instance.barras.FindIndex(a => a == GameManager.instance.protoganista);
 
@@ -55,7 +56,7 @@ public class AcosoManager : MonoBehaviour
 
     void PunteroPressed()
     {
-        GameManager.instance.CambiarColorFondo(colorFondoB);
+        GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
         foreach (Barra barra in GameManager.instance.barras)
         {
             barra.GetValoresEstadoB();
@@ -85,5 +86,10 @@ public class AcosoManager : MonoBehaviour
         {
             GameManager.instance.barras[i].heightTarget = alturaMinima + ((i - indexProtagonista) * diferenciaAltura);
         }
+    }
+
+    void RegresarFondoA()
+    {
+        GameManager.instance.CambiarFondo(GameManager.instance.fondoA);
     }
 }

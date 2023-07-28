@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     public List<Barra> barras = new List<Barra>();
     public Concepto concepto;
     public Barra protoganista;
-    public Color fondoInicial;
+    public Color fondoA;
+    public Color fondoB;
 
     [Header("Puntero - Modo manual")]
     public Puntero puntero;
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
         posicionXPrimeraBarra = -8.28f;
         separacionHorizontal = 0.315f;
         Application.targetFrameRate = 30;
-        fondoInicial = Camera.main.backgroundColor;
+        fondoA = Camera.main.backgroundColor;
     }
 
 
@@ -53,12 +54,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RegresarColorFondo()
-    {
-        Camera.main.backgroundColor = fondoInicial;
-    }
-
-    public void CambiarColorFondo(Color newColor)
+    public void CambiarFondo(Color newColor)
     {
         Camera.main.backgroundColor = newColor;
     }

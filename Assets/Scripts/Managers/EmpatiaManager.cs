@@ -18,6 +18,8 @@ public class EmpatiaManager : MonoBehaviour
         prota = GameManager.instance.protoganista;
         GetBarrasNextToProta();
 
+        GameManager.instance.puntero.Released.AddListener(RegresarFondoA);
+
         prota.AtLowestPoint.AddListener(() =>
         {
             if (GameManager.instance.hayInterccion)
@@ -31,6 +33,7 @@ public class EmpatiaManager : MonoBehaviour
                     rightBarraToProta.movimiento = Barra.Movimiento.manual;
                 }
                 protaCounterAtLowestPoint++;
+                GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
             }
             else if (protaCounterAtLowestPoint >= 0) prota.GetValoresEstadoA();
         });
@@ -79,5 +82,8 @@ public class EmpatiaManager : MonoBehaviour
         leftBarraToProta.direccion = Barra.Direccion.sube;
     }
 
-
+    void RegresarFondoA()
+    {
+        GameManager.instance.CambiarFondo(GameManager.instance.fondoA);
+    }
 }

@@ -2737,7 +2737,8 @@ MonoBehaviour:
   - {fileID: 1329716359}
   concepto: 3
   protoganista: {fileID: 14060350}
-  fondoInicial: {r: 0, g: 0, b: 0, a: 0}
+  fondoA: {r: 0.9529412, g: 0.92941177, b: 0.8666667, a: 0}
+  fondoB: {r: 0.972549, g: 0.79607844, b: 1, a: 0}
   puntero: {fileID: 985344611}
   punteroPosition: {x: 0, y: 0}
   hayInterccion: 0

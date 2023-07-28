@@ -1680,7 +1680,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.95294124, g: 0.7568628, b: 0.7803922, a: 0}
+  m_BackGroundColor: {r: 0.95294124, g: 0.92941177, b: 0.8666667, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2596,7 +2596,7 @@ MonoBehaviour:
   - {fileID: 1329716359}
   concepto: 7
   protoganista: {fileID: 2038823181}
-  fondoInicial: {r: 0, g: 0, b: 0, a: 0}
+  fondoInicial: {r: 1, g: 0.85490197, b: 0.4745098, a: 0}
   puntero: {fileID: 985344611}
   punteroPosition: {x: 0, y: 0}
   hayInterccion: 0

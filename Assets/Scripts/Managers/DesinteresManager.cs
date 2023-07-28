@@ -21,6 +21,8 @@ public class DesinteresManager : MonoBehaviour
     private void Start()
     {
         indexBarraColisionada = 0;
+        GameManager.instance.puntero.Pressed.AddListener(() => GameManager.instance.CambiarFondo(GameManager.instance.fondoB));
+        GameManager.instance.puntero.Released.AddListener(RegresarFondoA);
         GameManager.instance.puntero.PunteroTriggerEnter.AddListener(CollisionEnter);
         GameManager.instance.puntero.PunteroTriggerStay.AddListener(ReorganizarBarras);
     }
@@ -91,6 +93,11 @@ public class DesinteresManager : MonoBehaviour
         {
             GameManager.instance.barras[i].heightTarget = GameManager.instance.punteroPosition.y - ((i-indexBarraColisionada) * diferenciaAltura);
         }
+    }
+
+    void RegresarFondoA()
+    {
+        GameManager.instance.CambiarFondo(GameManager.instance.fondoA);
     }
 
 }
