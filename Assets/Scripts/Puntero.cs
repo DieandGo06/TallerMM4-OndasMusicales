@@ -20,7 +20,6 @@ public class Puntero : MonoBehaviour
 
 
 
-
     private void Awake()
     {
         Pressed = new UnityEvent();

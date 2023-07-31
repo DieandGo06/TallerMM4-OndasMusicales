@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fc25c0d0c1ccc4995b3ccb7860c7ea, type: 3}
   m_Name: Acoso Protagonista-Inicial
   m_EditorClassIdentifier: 
-  alturaMin_A: -2
-  alturaMax_A: -0.5
-  velocidadSubida_A: 2.5
-  velocidadBajada_A: 2.5
+  alturaMin_A: -3.5
+  alturaMax_A: -2.5
+  velocidadSubida_A: 0.8
+  velocidadBajada_A: 0.6
   rangoVariacionAltura_A: 0
   tiempoSostenidoEnMinimo_A: 0
   tiempoSostenidoEnMaximo_A: 0
