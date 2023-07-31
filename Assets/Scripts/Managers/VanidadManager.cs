@@ -48,6 +48,8 @@ public class VanidadManager : MonoBehaviour
             barraActivada.heightTarget = barraActivada.data.alturaMax_B;
             barraActivada.movimiento = Barra.Movimiento.manual;
             barraActivada.GetValoresEstadoB();
+
+            if (barraActivada == GameManager.instance.protoganista) GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
         }
     }
 
@@ -81,7 +83,7 @@ public class VanidadManager : MonoBehaviour
                 barra.movimiento = Barra.Movimiento.automatico;
                 barra.direccion = Barra.Direccion.sube;
                 barra.estado = Barra.Estado.transicion;
-                if (barra.esProtagonista) barra.tiempoSostenidoEnMaximo = 3f;
+                if (barra.esProtagonista) barra.tiempoSostenidoEnMaximo = 4.5f;
                 else barra.tiempoSostenidoEnMaximo = 1.5f;
             }
             //Tras el tiempo sostendo en la altura maxima tras terminar la interaccion

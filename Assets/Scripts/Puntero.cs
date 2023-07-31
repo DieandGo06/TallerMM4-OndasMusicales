@@ -40,6 +40,7 @@ public class Puntero : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
+            GameManager.instance.hayInterccion = true;
             isMousePressed = true;
             Pressed.Invoke();
         }
@@ -55,7 +56,6 @@ public class Puntero : MonoBehaviour
         {
             posicion = cam.ScreenToWorldPoint(Input.mousePosition);
             GameManager.instance.punteroPosition = posicion;
-            GameManager.instance.hayInterccion = true;
             rb.MovePosition(posicion);
         }
 
@@ -65,8 +65,33 @@ public class Puntero : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            Vector3 position = cam.ScreenToWorldPoint(touch.position);
-            rb.MovePosition(position);
+            
+
+            switch (touch.phase)
+            {
+                // Record initial touch position.
+                case TouchPhase.Began:
+                    Vector3 position = cam.ScreenToWorldPoint(touch.position);
+                    GameManager.instance.hayInterccion = true;
+                    rb.MovePosition(position);
+                    Pressed.Invoke();
+                    break;
+
+                // Determine direction by comparing the current touch position with the initial one.
+                case TouchPhase.Moved:
+                    Vector3 positionMoved = cam.ScreenToWorldPoint(touch.position);
+                    GameManager.instance.hayInterccion = true;
+                    rb.MovePosition(positionMoved);
+                    break;
+
+                // Report that a direction has been chosen when the finger is lifted.
+                case TouchPhase.Ended:
+                    isMousePressed = false;
+                    transform.position = new Vector3(-10, 0, 0);
+                    GameManager.instance.hayInterccion = false;
+                    Released.Invoke();
+                    break;
+            }
         }
 #endif
     }
