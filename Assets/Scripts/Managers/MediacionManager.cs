@@ -23,7 +23,7 @@ public class MediacionManager : MonoBehaviour
     private void Start()
     {
         indexBarraColisionada = 0;
-        protaIndex = GameManager.instance.barras.FindIndex(a => a == GameManager.instance.protoganista);
+        protaIndex = GameManager.instance.barras.FindIndex(a => a == GameManager.instance.protagonista);
         Debug.Log(protaIndex);
 
         for (int i = 0; i < GameManager.instance.barras.Count; i++)
@@ -78,7 +78,7 @@ public class MediacionManager : MonoBehaviour
             barra.movimiento = Barra.Movimiento.manual;
         }
         ReorganizarBarras();
-        GameManager.instance.protoganista.heightTarget = -1;
+        GameManager.instance.protagonista.heightTarget = -1;
     }
 
     void GetIndexBarraColisionada(Barra barraColisionada)

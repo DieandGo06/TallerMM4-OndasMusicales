@@ -6,9 +6,7 @@ public class AcosoManager : MonoBehaviour
 {
     public static AcosoManager instance;
     [Range(0, 1f)] public float diferenciaAltura;
-    public BarreraData dataInicialProta;
     public Color colorFondoB;
-    int indexProtagonista;
 
 
     private void Awake()
@@ -18,12 +16,10 @@ public class AcosoManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.protoganista.data.CopyDataFrom(dataInicialProta);
         GameManager.instance.puntero.Pressed.AddListener(PunteroPressed);
         GameManager.instance.puntero.Released.AddListener(RegresarFondoA);
-        GameManager.instance.puntero.PunteroTriggerStay.AddListener(ReorganizarBarras);
-        indexProtagonista = GameManager.instance.barras.FindIndex(a => a == GameManager.instance.protoganista);
-
+        GameManager.instance.puntero.PunteroTriggerEnter.AddListener(CambiarFondo);
+        GameManager.instance.puntero.PunteroTriggerEnter.AddListener(OrganizarBarras);
     }
 
     private void Update()
@@ -39,7 +35,7 @@ public class AcosoManager : MonoBehaviour
                     barra.direccion = Barra.Direccion.baja;
                     barra.GetValoresEstadoA();
                     //Debe ir despues de GetValoresA
-                    if (barra != GameManager.instance.protoganista) barra.velocidadBajada = 10f;
+                    if (barra != GameManager.instance.protagonista) barra.velocidadBajada = 10f;
                     else barra.velocidadBajada = 4f;
                     barra.estado = Barra.Estado.transicion;
                     return;
@@ -56,35 +52,52 @@ public class AcosoManager : MonoBehaviour
 
     void PunteroPressed()
     {
-        GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
         foreach (Barra barra in GameManager.instance.barras)
         {
             barra.GetValoresEstadoB();
             barra.movimiento = Barra.Movimiento.manual;
         }
-
-        if (GameManager.instance.protoganista.data.alturaMax_B > -3.2f)
-        {
-            GameManager.instance.protoganista.data.alturaMin_A += -0.4f;
-            GameManager.instance.protoganista.data.alturaMax_A += -0.6f;
-            GameManager.instance.protoganista.data.alturaMax_B += -0.4f;
-        }
     }
 
-    void ReorganizarBarras(Barra barraColisionada)
+    void CambiarFondo(Barra barraColisionada)
     {
-        float alturaMinima = -1.7f;
-        GameManager.instance.protoganista.heightTarget = GameManager.instance.protoganista.data.alturaMax_A - 1;
+        if (barraColisionada.index == GameManager.instance.protagonista.index)
+        {
+            GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
+        } 
+        else GameManager.instance.CambiarFondo(GameManager.instance.fondoA);
+    }
+
+    void OrganizarBarras(Barra barraColisionada)
+    {
+        float alturaMinima = -3f;
+        float extraHeightSpacing;
+        if (barraColisionada.index <= 8) 
+        {
+            extraHeightSpacing = (float)(0.1f + (barraColisionada.index / 30f));
+        }
+        else if (barraColisionada.index == GameManager.instance.protagonista.index)
+        {
+            extraHeightSpacing = 0.65f;
+        }
+        else if (barraColisionada.index >= 10)
+        {
+            extraHeightSpacing = (float)(0.1f + ((GameManager.instance.barras.Count - barraColisionada.index) / 30f));
+        }
+        else extraHeightSpacing = 0;
+
+        //Protagonista
+        GameManager.instance.protagonista.heightTarget = GameManager.instance.protagonista.data.alturaMax_A - 1;
 
         //Barras a la izquierda
-        for (int i = indexProtagonista - 1; i >= 0; i--)
+        for (int i = GameManager.instance.protagonista.index - 1; i >= 0; i--)
         {
-            GameManager.instance.barras[i].heightTarget = alturaMinima + ((indexProtagonista - i) * diferenciaAltura);
+            GameManager.instance.barras[i].heightTarget = alturaMinima + ((GameManager.instance.protagonista.index - i) * extraHeightSpacing);
         }
         //Barras a la derecha
-        for (int i = indexProtagonista + 1; i < GameManager.instance.barras.Count; i++)
+        for (int i = GameManager.instance.protagonista.index + 1; i < GameManager.instance.barras.Count; i++)
         {
-            GameManager.instance.barras[i].heightTarget = alturaMinima + ((i - indexProtagonista) * diferenciaAltura);
+            GameManager.instance.barras[i].heightTarget = alturaMinima + ((i - GameManager.instance.protagonista.index) * extraHeightSpacing);
         }
     }
 

@@ -15,7 +15,7 @@ public class EmpatiaManager : MonoBehaviour
 
     void Start()
     {
-        prota = GameManager.instance.protoganista;
+        prota = GameManager.instance.protagonista;
         GetBarrasNextToProta();
 
         GameManager.instance.puntero.Released.AddListener(RegresarFondoA);

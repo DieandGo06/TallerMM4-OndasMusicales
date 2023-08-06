@@ -68,7 +68,7 @@ public class TimidezManager : MonoBehaviour
         //Barra Principal
         foreach (Barra barra in GameManager.instance.barras)
         {
-            if (barra != GameManager.instance.protoganista)
+            if (barra != GameManager.instance.protagonista)
             {
                 barra.heightTarget = GameManager.instance.punteroPosition.y;
             }

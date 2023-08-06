@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64fc25c0d0c1ccc4995b3ccb7860c7ea, type: 3}
-  m_Name: Acoso Protagonista-Inicial
+  m_Name: Acoso (General)
   m_EditorClassIdentifier: 
   alturaMin_A: -3.5
   alturaMax_A: -2.5
@@ -20,7 +20,7 @@ MonoBehaviour:
   tiempoSostenidoEnMinimo_A: 0
   tiempoSostenidoEnMaximo_A: 0
   alturaMin_B: -4.5
-  alturaMax_B: -1.2
+  alturaMax_B: 4
   velocidadSubida_B: 1
   velocidadBajada_B: 1
   rangoVariacionAltura_B: 0

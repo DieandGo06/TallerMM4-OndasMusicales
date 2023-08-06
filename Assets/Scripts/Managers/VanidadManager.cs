@@ -49,7 +49,7 @@ public class VanidadManager : MonoBehaviour
             barraActivada.movimiento = Barra.Movimiento.manual;
             barraActivada.GetValoresEstadoB();
 
-            if (barraActivada == GameManager.instance.protoganista) GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
+            if (barraActivada == GameManager.instance.protagonista) GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
         }
     }
 

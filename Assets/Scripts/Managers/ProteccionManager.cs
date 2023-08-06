@@ -49,7 +49,7 @@ public class ProteccionManager : MonoBehaviour
                         barra.GetValoresEstadoA();
                     }
                 }
-                else if (barra != GameManager.instance.protoganista)
+                else if (barra != GameManager.instance.protagonista)
                 {
                     if (barra.movimiento == Barra.Movimiento.manual)
                     {
@@ -86,7 +86,7 @@ public class ProteccionManager : MonoBehaviour
                     }
                     GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
                 }
-                else if (barraActivada != GameManager.instance.protoganista)
+                else if (barraActivada != GameManager.instance.protagonista)
                 {
                     barraActivada.GetValoresEstadoB();
                     barraActivada.movimiento = Barra.Movimiento.manual;

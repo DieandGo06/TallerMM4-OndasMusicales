@@ -34,6 +34,7 @@ public class Barra : MonoBehaviour
 
     Rigidbody2D rBody;
     //private float alturaMinimaPantalla = -8;
+    [HideInInspector] public int index;
     [HideInInspector] public float variacionAltura;
     [HideInInspector] public UnityEvent AtLowestPoint = new UnityEvent();
     [HideInInspector] public UnityEvent AtHighestPoint = new UnityEvent();
@@ -52,11 +53,12 @@ public class Barra : MonoBehaviour
     private void Start()
     {
         GetValoresEstadoA();
+        index = GameManager.instance.barras.FindIndex(a => a == this);
 
         //Protagonista
-        if (esProtagonista && GameManager.instance.protoganista == null)
+        if (esProtagonista && GameManager.instance.protagonista == null)
         {
-            GameManager.instance.protoganista = this;
+            GameManager.instance.protagonista = this;
             transform.name = "Protagonista";
         }
 
@@ -83,7 +85,7 @@ public class Barra : MonoBehaviour
         float factor;//0 teleport - 1 inmovil
         if (GameManager.instance.concepto == GameManager.Concepto.Acoso) factor = 0.5f;
         else if (GameManager.instance.concepto == GameManager.Concepto.Empatia) factor = 0.95f;
-        else if (GameManager.instance.concepto == GameManager.Concepto.Timidez && this == GameManager.instance.protoganista) factor = 0.98f;
+        else if (GameManager.instance.concepto == GameManager.Concepto.Timidez && this == GameManager.instance.protagonista) factor = 0.98f;
         else factor = 0.9f;
 
 

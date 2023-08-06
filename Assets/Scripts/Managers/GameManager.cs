@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("General")]
     public List<Barra> barras = new List<Barra>();
     public Concepto concepto;
-    public Barra protoganista;
+    public Barra protagonista;
     public Color fondoA;
     public Color fondoB;
 

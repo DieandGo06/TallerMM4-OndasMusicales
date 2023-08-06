@@ -41,7 +41,7 @@ public class DesmparoManager : MonoBehaviour
         {
             if (barraActivada.estado == Barra.Estado.estado_A)
             { 
-                if (barraActivada != GameManager.instance.protoganista)
+                if (barraActivada != GameManager.instance.protagonista)
                 {
                     barraActivada.GetValoresEstadoB();
                     barraActivada.movimiento = Barra.Movimiento.manual;
