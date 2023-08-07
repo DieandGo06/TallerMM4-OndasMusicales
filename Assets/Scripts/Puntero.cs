@@ -47,7 +47,7 @@ public class Puntero : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             isMousePressed = false;
-            transform.position = new Vector3(-10, 0, 0);
+            transform.position = new Vector3(-15, 0, 0);
             GameManager.instance.hayInterccion = false;
             Released.Invoke();
         }

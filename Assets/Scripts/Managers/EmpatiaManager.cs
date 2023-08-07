@@ -4,86 +4,98 @@ using UnityEngine;
 
 public class EmpatiaManager : MonoBehaviour
 {
-    public int protaCounterAtLowestPoint;
-    public Barra leftBarraToProta;
-    public Barra rightBarraToProta;
-    Barra prota;
+    public static EmpatiaManager instance;
+    [Header("Barras elegidas")]
+    int indexBarraColisionada;
+    bool barrasLevantadas;
 
 
-
-
-
-    void Start()
+    private void Awake()
     {
-        prota = GameManager.instance.protagonista;
-        GetBarrasNextToProta();
+        instance = this;
+    }
 
-        GameManager.instance.puntero.Released.AddListener(RegresarFondoA);
+    private void Start()
+    {
+        GameManager.instance.puntero.Pressed.AddListener(() => StartCoroutine(LevantarBarras()));
+        GameManager.instance.puntero.PunteroTriggerEnter.AddListener(CollisionEnter);
+        GameManager.instance.puntero.Released.AddListener(PunteroReleased);
+    }
 
-        prota.AtLowestPoint.AddListener(() =>
+
+    void CollisionEnter(Barra barraColisionada)
+    {
+        CongelarProtagonista();
+        BajarBarreras(barraColisionada);
+    }
+
+    void PunteroReleased()
+    {
+        RegresarEstadoInicial();
+        CancelarCorrutinas();
+        barrasLevantadas = false;
+    }
+
+
+
+
+
+    void CongelarProtagonista()
+    {
+        GameManager.instance.protagonista.movimiento = Barra.Movimiento.manual;
+        GameManager.instance.protagonista.heightTarget = GameManager.instance.protagonista.transform.position.y - 0.5f;
+    }
+
+    void BajarBarreras(Barra barraColisionada)
+    {
+        if (barrasLevantadas)
         {
-            if (GameManager.instance.hayInterccion)
+            if (!barraColisionada.esProtagonista)
             {
-                if (protaCounterAtLowestPoint == 0)
-                {
-                    prota.GetValoresEstadoB();
-                    leftBarraToProta.GetValoresEstadoB_From(prota.data);
-                    rightBarraToProta.GetValoresEstadoB_From(prota.data);
-                    leftBarraToProta.movimiento = Barra.Movimiento.manual;
-                    rightBarraToProta.movimiento = Barra.Movimiento.manual;
-                }
-                protaCounterAtLowestPoint++;
-                GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
+                barraColisionada.GetValoresEstadoB();
+                barraColisionada.movimiento = Barra.Movimiento.manual;
+                barraColisionada.heightTarget = GameManager.instance.protagonista.heightTarget;
             }
-            else if (protaCounterAtLowestPoint >= 0) prota.GetValoresEstadoA();
-        });
+            GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
+        }
+    }
 
-        prota.AtHighestPoint.AddListener(() =>
+    void RegresarEstadoInicial()
+    {
+        foreach (Barra barra in GameManager.instance.barras)
         {
-            if (!GameManager.instance.hayInterccion)
+            barra.GetValoresEstadoA();
+            barra.direccion = Barra.Direccion.sube;
+            barra.movimiento = Barra.Movimiento.automatico;
+            barra.velocidadBajada = 6f;
+
+            barra.AtLowestPoint.AddListener(() =>
             {
-                if (protaCounterAtLowestPoint > 0)
-                {
-                    leftBarraToProta.GetValoresEstadoA();
-                    rightBarraToProta.GetValoresEstadoA();
-                    protaCounterAtLowestPoint = 0;
-                }
-            }
-        });
-
-
-        prota.StartGoingUp.AddListener(() =>
-        {
-            if (protaCounterAtLowestPoint == 1)
-            {
-                ChangeMovmientoBarrasLaterales();
-            }
-        });
-    }
-
-    void FixedUpdate()
-    {
-        if (leftBarraToProta.movimiento == Barra.Movimiento.manual) leftBarraToProta.heightTarget = prota.transform.position.y;
-        if (rightBarraToProta.movimiento == Barra.Movimiento.manual) rightBarraToProta.heightTarget = prota.transform.position.y;
-    }
-
-    void GetBarrasNextToProta()
-    {
-        int index = GameManager.instance.barras.FindIndex(a => a == prota);
-        leftBarraToProta = GameManager.instance.barras[index - 1];
-        rightBarraToProta = GameManager.instance.barras[index + 1];
-    }
-
-    void ChangeMovmientoBarrasLaterales()
-    {
-        rightBarraToProta.movimiento = Barra.Movimiento.automatico;
-        leftBarraToProta.movimiento = Barra.Movimiento.automatico;
-        rightBarraToProta.direccion = Barra.Direccion.sube;
-        leftBarraToProta.direccion = Barra.Direccion.sube;
-    }
-
-    void RegresarFondoA()
-    {
+                barra.GetValoresEstadoA();
+                barra.AtLowestPoint.RemoveAllListeners();
+            });
+        }
         GameManager.instance.CambiarFondo(GameManager.instance.fondoA);
+    }
+
+
+    IEnumerator LevantarBarras()
+    {
+        foreach (Barra barra in GameManager.instance.barras)
+        {
+            if (barra != GameManager.instance.protagonista)
+            {
+                barra.GetValoresEstadoB();
+                barra.movimiento = Barra.Movimiento.manual;
+                barra.heightTarget = barra.alturaMax;
+            }
+        }
+        yield return new WaitForSeconds(0.4f);
+        barrasLevantadas = true;
+    }
+
+    void CancelarCorrutinas()
+    {
+        StopCoroutine("LevantarBarras");
     }
 }
