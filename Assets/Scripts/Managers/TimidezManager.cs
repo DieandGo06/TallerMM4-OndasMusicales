@@ -68,9 +68,18 @@ public class TimidezManager : MonoBehaviour
 
     void ColisionEnter(Barra barraColisionada)
     {
-        LevantarBarra(barraColisionada);
-        //StopCoroutine(ContadorBajarBarrera[barraColisionada.index]);
-        //ContadorBajarBarrera[barraColisionada.index] = null;
+        //if (barraColisionada.estado == Barra.Estado.estado_A)
+        //{
+            if (ContadorBajarBarrera[barraColisionada.index] != null)
+            {
+                StopCoroutine(ContadorBajarBarrera[barraColisionada.index]);
+                ContadorBajarBarrera[barraColisionada.index] = null;
+                return;
+            }
+            LevantarBarra(barraColisionada);
+
+        //}
+
     }
 
     void ColisionExit(Barra barraColisionada)
@@ -79,7 +88,7 @@ public class TimidezManager : MonoBehaviour
         {
             ContadorBajarBarrera[barraColisionada.index] = BajarBarrera(barraColisionada);
             StartCoroutine(ContadorBajarBarrera[barraColisionada.index]);
-            ContadorBajarBarrera[barraColisionada.index] = null;
+            //ContadorBajarBarrera[barraColisionada.index] = null;
         }
 
     }
@@ -108,7 +117,7 @@ public class TimidezManager : MonoBehaviour
 
     IEnumerator BajarBarrera(Barra barraColisionada)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         barraColisionada.GetValoresEstadoA();
         barraColisionada.direccion = Barra.Direccion.baja;
         barraColisionada.movimiento = Barra.Movimiento.automatico;
@@ -121,27 +130,6 @@ public class TimidezManager : MonoBehaviour
         });
     }
 
-    void CancelarCorrutinas()
-    {
-        StopCoroutine("LevantarBarras");
-    }
-
-
-    void ReorganizarBarras(Barra barraColisionada)
-    {
-        //Barra Principal
-        foreach (Barra barra in GameManager.instance.barras)
-        {
-            if (barra != GameManager.instance.protagonista)
-            {
-                barra.heightTarget = GameManager.instance.punteroPosition.y;
-            }
-            else
-            {
-                barra.heightTarget = -1 - GameManager.instance.punteroPosition.y;
-            }
-        }
-    }
 
     void RegresarFondoA()
     {

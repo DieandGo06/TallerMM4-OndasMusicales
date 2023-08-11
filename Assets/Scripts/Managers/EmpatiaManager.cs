@@ -37,9 +37,6 @@ public class EmpatiaManager : MonoBehaviour
     }
 
 
-
-
-
     void CongelarProtagonista()
     {
         GameManager.instance.protagonista.movimiento = Barra.Movimiento.manual;
