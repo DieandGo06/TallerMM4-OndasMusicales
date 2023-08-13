@@ -85,7 +85,7 @@ public class Barra : MonoBehaviour
         float factor;//0 teleport - 1 inmovil
         if (GameManager.instance.concepto == GameManager.Concepto.Acoso) factor = 0.5f;
         else if (GameManager.instance.concepto == GameManager.Concepto.Empatia) factor = 0.95f;
-        else if (GameManager.instance.concepto == GameManager.Concepto.Timidez && this == GameManager.instance.protagonista) factor = 0.98f;
+        //else if (GameManager.instance.concepto == GameManager.Concepto.Timidez && this == GameManager.instance.protagonista) factor = 0.98f;
         else factor = 0.9f;
 
 

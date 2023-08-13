@@ -3319,7 +3319,7 @@ MonoBehaviour:
   concepto: 0
   protagonista: {fileID: 0}
   fondoA: {r: 0.9529412, g: 0.92941177, b: 0.8666667, a: 0}
-  fondoB: {r: 1, g: 0.627451, b: 0.627451, a: 0}
+  fondoB: {r: 0.94509804, g: 0.6, b: 0.5254902, a: 0}
   puntero: {fileID: 902186427}
   punteroPosition: {x: 0, y: 0}
   hayInterccion: 0

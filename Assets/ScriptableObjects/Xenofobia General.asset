@@ -19,8 +19,8 @@ MonoBehaviour:
   rangoVariacionAltura_A: 0.3
   tiempoSostenidoEnMinimo_A: 0
   tiempoSostenidoEnMaximo_A: 0
-  alturaMin_B: -2.5
-  alturaMax_B: -1.5
+  alturaMin_B: -2
+  alturaMax_B: -1
   velocidadSubida_B: 4
   velocidadBajada_B: 2
   rangoVariacionAltura_B: 0

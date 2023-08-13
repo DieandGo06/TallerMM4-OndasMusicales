@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fc25c0d0c1ccc4995b3ccb7860c7ea, type: 3}
   m_Name: Timidez Protagonista
   m_EditorClassIdentifier: 
-  alturaMin_A: -4.41
-  alturaMax_A: -1.92
-  velocidadSubida_A: 1.56
-  velocidadBajada_A: 1.12
+  alturaMin_A: -3.5
+  alturaMax_A: -2.5
+  velocidadSubida_A: 0.8
+  velocidadBajada_A: 0.6
   rangoVariacionAltura_A: 0.3
-  tiempoSostenidoEnMinimo_A: 2
+  tiempoSostenidoEnMinimo_A: 0
   tiempoSostenidoEnMaximo_A: 0
-  alturaMin_B: -5.46
+  alturaMin_B: -5.5
   alturaMax_B: -3.5
   velocidadSubida_B: 0
   velocidadBajada_B: 0
