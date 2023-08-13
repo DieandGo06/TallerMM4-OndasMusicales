@@ -28,11 +28,11 @@ public class TimidezManager : MonoBehaviour
 
     private void Update()
     {
-        float punteroPosXNormalized = Mathf.InverseLerp(-9, 9, puntero.transform.position.x);
-        float distPunteroToProta = Mathf.Abs(punteroPosXNormalized - protaPosXNormalized) * 10;
-
         if (GameManager.instance.hayInterccion)
         {
+            float punteroPosXNormalized = Mathf.InverseLerp(-9, 9, puntero.transform.position.x);
+            float distPunteroToProta = Mathf.Abs(punteroPosXNormalized - protaPosXNormalized) * 10;
+
             if (distPunteroToProta > 0.5f)
             {
                 GameManager.instance.protagonista.heightTarget = Remap(distPunteroToProta, 8.5f, -2.5f, 1.4f, -4.5f);
@@ -81,7 +81,7 @@ public class TimidezManager : MonoBehaviour
 
     void ColisionExit(Barra barraColisionada)
     {
-        if (ContadorBajarBarrera[barraColisionada.index] == null)
+        if (ContadorBajarBarrera[barraColisionada.index] == null && barraColisionada != GameManager.instance.protagonista)
         {
             ContadorBajarBarrera[barraColisionada.index] = BajarBarrera(barraColisionada);
             StartCoroutine(ContadorBajarBarrera[barraColisionada.index]);
