@@ -2949,9 +2949,9 @@ MonoBehaviour:
   - {fileID: 1928986382}
   - {fileID: 1329716359}
   concepto: 1
-  protoganista: {fileID: 14060350}
+  protagonista: {fileID: 0}
   fondoA: {r: 0.9529412, g: 0.92941177, b: 0.8666667, a: 0}
-  fondoB: {r: 0.77254903, g: 0.827451, b: 0.9647059, a: 0}
+  fondoB: {r: 0.6431373, g: 0.7254902, b: 0.92941177, a: 0}
   puntero: {fileID: 985344611}
   punteroPosition: {x: 0, y: 0}
   hayInterccion: 0

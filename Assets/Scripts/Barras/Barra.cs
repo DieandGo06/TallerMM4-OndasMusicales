@@ -87,7 +87,7 @@ public class Barra : MonoBehaviour
         if (GameManager.instance.concepto == GameManager.Concepto.Acoso) factor = 0.5f;
         else if (GameManager.instance.concepto == GameManager.Concepto.Empatia) factor = 0.95f;
         else if (GameManager.instance.concepto == GameManager.Concepto.Vanidad && this == GameManager.instance.protagonista) factor = 0.5f;
-        //else if (GameManager.instance.concepto == GameManager.Concepto.Timidez && this == GameManager.instance.protagonista) factor = 0.98f;
+        else if (GameManager.instance.concepto == GameManager.Concepto.Xenofobia && index == 1 || index == 2) factor = 0.6f;
         else factor = 0.9f;
 
 

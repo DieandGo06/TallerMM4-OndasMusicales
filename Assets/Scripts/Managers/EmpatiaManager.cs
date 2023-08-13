@@ -40,7 +40,7 @@ public class EmpatiaManager : MonoBehaviour
     void CongelarProtagonista()
     {
         GameManager.instance.protagonista.movimiento = Barra.Movimiento.manual;
-        GameManager.instance.protagonista.heightTarget = GameManager.instance.protagonista.transform.position.y - 0.5f;
+        GameManager.instance.protagonista.heightTarget = GameManager.instance.protagonista.transform.position.y-0.5f;
     }
 
     void BajarBarreras(Barra barraColisionada)
@@ -51,7 +51,7 @@ public class EmpatiaManager : MonoBehaviour
             {
                 barraColisionada.GetValoresEstadoB();
                 barraColisionada.movimiento = Barra.Movimiento.manual;
-                barraColisionada.heightTarget = GameManager.instance.protagonista.heightTarget;
+                barraColisionada.heightTarget = GameManager.instance.protagonista.transform.position.y;
             }
             GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
         }
@@ -62,7 +62,7 @@ public class EmpatiaManager : MonoBehaviour
         foreach (Barra barra in GameManager.instance.barras)
         {
             barra.GetValoresEstadoA();
-            barra.direccion = Barra.Direccion.sube;
+            barra.direccion = Barra.Direccion.baja;
             barra.movimiento = Barra.Movimiento.automatico;
             barra.velocidadBajada = 6f;
 

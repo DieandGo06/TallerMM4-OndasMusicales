@@ -5,6 +5,7 @@ using UnityEngine;
 public class XenofobiaManager : MonoBehaviour
 {
     public static XenofobiaManager instance;
+    IEnumerator[] ContadorBajarBarrera;
 
 
 
@@ -15,7 +16,10 @@ public class XenofobiaManager : MonoBehaviour
 
     private void Start()
     {
+        ContadorBajarBarrera = new IEnumerator[GameManager.instance.barras.Count];
         GameManager.instance.puntero.PunteroTriggerEnter.AddListener(ColisionEnter);
+        GameManager.instance.puntero.PunteroTriggerExit.AddListener(ColisionExit);
+
         GameManager.instance.puntero.Released.AddListener(PunteroReleased);
     }
 
@@ -25,26 +29,66 @@ public class XenofobiaManager : MonoBehaviour
     }
 
 
-
     void PunteroReleased()
     {
-        BajarBarreras();
-        RegresarFondoA();
+        //RegresarFondoA();
     }
 
     void ColisionEnter(Barra barraColisionada)
     {
-        ActivarBarras(barraColisionada);
+        //ActivarBarras(barraColisionada);
+
+        if (barraColisionada.estado == Barra.Estado.estado_A)
+        {
+            ActivarBarras(barraColisionada);
+        }
+
+        if (barraColisionada.index != 1 || barraColisionada.index != 2)
+        {
+            if (ContadorBajarBarrera[barraColisionada.index] != null)
+            {
+                StopCoroutine(ContadorBajarBarrera[barraColisionada.index]);
+                ContadorBajarBarrera[barraColisionada.index] = null;
+            }
+        }
+
+        if (barraColisionada == GameManager.instance.protagonista)
+        {
+            GameManager.instance.CambiarFondo(GameManager.instance.fondoB);
+        }
     }
 
     void ColisionExit(Barra barraColisionada)
     {
+        //Barras muros
+        if (barraColisionada.index == 1 || barraColisionada.index == 2)
+        {
+            barraColisionada.velocidadSubida = 10f;
+            barraColisionada.direccion = Barra.Direccion.sube;
+            barraColisionada.movimiento = Barra.Movimiento.automatico;
+
+            barraColisionada.AtHighestPoint.AddListener(() =>
+            {
+                BajarMuros(barraColisionada);
+                barraColisionada.AtHighestPoint.RemoveAllListeners();
+            });
+
+
+        }
+        //El resto de barras
+        else
+        {
+            if (ContadorBajarBarrera[barraColisionada.index] == null)
+            {
+                ContadorBajarBarrera[barraColisionada.index] = BajarBarrera(barraColisionada);
+                StartCoroutine(ContadorBajarBarrera[barraColisionada.index]);
+                BajarMuros(barraColisionada);
+            }
+        }
+
+
 
     }
-
-
-
-
 
 
 
@@ -76,32 +120,39 @@ public class XenofobiaManager : MonoBehaviour
         }
     }
 
-    void BajarBarreras()
+    void BajarMuros(Barra barraColisionada)
     {
-        foreach (Barra barra in GameManager.instance.barras)
+        if (barraColisionada.index == 1 || barraColisionada.index == 2)
         {
-            if (barra.index == 1 || barra.index == 2)
+            barraColisionada.GetValoresEstadoA();
+            barraColisionada.velocidadBajada = 6f;
+            barraColisionada.tiempoSostenidoEnMaximo = 3f;
+            barraColisionada.direccion = Barra.Direccion.sube;
+            barraColisionada.movimiento = Barra.Movimiento.automatico;
+
+            barraColisionada.AtLowestPoint.AddListener(() =>
             {
-                barra.GetValoresEstadoA();
-                barra.velocidadBajada = 6f;
-                barra.tiempoSostenidoEnMaximo = 2f;
-                barra.direccion = Barra.Direccion.sube;
-                barra.movimiento = Barra.Movimiento.automatico;
-            }
-            else
-            {
-                barra.GetValoresEstadoA();
-                barra.direccion = Barra.Direccion.baja;
-                barra.movimiento = Barra.Movimiento.automatico;
-                barra.velocidadBajada = 3f;
-            }
-            
-            barra.AtLowestPoint.AddListener(() =>
-            {
-                barra.GetValoresEstadoA();
-                barra.AtLowestPoint.RemoveAllListeners();
+                RegresarFondoA();
+                barraColisionada.GetValoresEstadoA();
+                barraColisionada.AtLowestPoint.RemoveAllListeners();
             });
         }
+    }
+
+    IEnumerator BajarBarrera(Barra barraColisionada)
+    {
+        yield return new WaitForSeconds(2f);
+        barraColisionada.GetValoresEstadoA();
+        barraColisionada.direccion = Barra.Direccion.baja;
+        barraColisionada.movimiento = Barra.Movimiento.automatico;
+        barraColisionada.velocidadBajada = 3f;
+
+        barraColisionada.AtLowestPoint.AddListener(() =>
+        {
+            barraColisionada.GetValoresEstadoA();
+            barraColisionada.AtLowestPoint.RemoveAllListeners();
+            ContadorBajarBarrera[barraColisionada.index] = null;
+        });
     }
 
 
