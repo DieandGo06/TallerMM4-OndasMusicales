@@ -91,7 +91,7 @@ public class DesmparoManager : MonoBehaviour
 
     IEnumerator DesactivarBarrasActivas()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         foreach (Barra barra in GameManager.instance.barras)
         {
             if (barra.estado == Barra.Estado.estado_B)

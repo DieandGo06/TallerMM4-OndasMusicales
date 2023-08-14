@@ -8,6 +8,7 @@ public class DesinteresManager : MonoBehaviour
     public static DesinteresManager instance;
     [Range(0, 1f)] public float diferenciaAltura;
     int indexBarraColisionada;
+    public Puntero puntero;
 
 
 
@@ -91,7 +92,7 @@ public class DesinteresManager : MonoBehaviour
         //Barras a la derecha
         for (int i = indexBarraColisionada + 1; i < GameManager.instance.barras.Count; i++)
         {
-            GameManager.instance.barras[i].heightTarget = GameManager.instance.punteroPosition.y - ((i-indexBarraColisionada) * diferenciaAltura);
+            GameManager.instance.barras[i].heightTarget = GameManager.instance.punteroPosition.y   - ((i-indexBarraColisionada) * diferenciaAltura);
         }
     }
 

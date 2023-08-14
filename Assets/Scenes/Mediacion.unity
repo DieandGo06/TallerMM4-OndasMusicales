@@ -1420,7 +1420,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902186426}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3323,7 +3323,7 @@ MonoBehaviour:
   - {fileID: 1503011822}
   - {fileID: 960568090}
   concepto: 4
-  protagonista: {fileID: 0}
+  protagonista: {fileID: 242969422}
   fondoA: {r: 0.9529412, g: 0.92941177, b: 0.8666667, a: 0}
   fondoB: {r: 0.7490196, g: 0.8392157, b: 0.69803923, a: 0}
   puntero: {fileID: 902186427}

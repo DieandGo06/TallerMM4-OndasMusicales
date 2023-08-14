@@ -65,7 +65,7 @@ public class Puntero : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            
+            GameManager.instance.punteroPosition = cam.ScreenToWorldPoint(touch.position);
 
             switch (touch.phase)
             {
@@ -87,7 +87,7 @@ public class Puntero : MonoBehaviour
                 // Report that a direction has been chosen when the finger is lifted.
                 case TouchPhase.Ended:
                     isMousePressed = false;
-                    transform.position = new Vector3(-10, 0, 0);
+                    transform.position = new Vector3(-15, 0, 0);
                     GameManager.instance.hayInterccion = false;
                     Released.Invoke();
                     break;

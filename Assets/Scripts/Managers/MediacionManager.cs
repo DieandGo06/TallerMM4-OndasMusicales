@@ -5,7 +5,6 @@ using UnityEngine;
 public class MediacionManager : MonoBehaviour
 {
     public static MediacionManager instance;
-    float leftGroupHeight, rigthGroupHeight;
     int indexBarraColisionada;
     int protaIndex;
 

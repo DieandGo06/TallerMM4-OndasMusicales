@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Organizador")]
     [Range(-8.28f, 8.28f)] public float posicionXPrimeraBarra;
-    [Range(0, 0.5f)] public float separacionHorizontal;
+    [Range(-0.2f, 0.2f)] public float separacionHorizontal;
     
 
 
@@ -31,6 +31,21 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        //2000x1200
+        posicionXPrimeraBarra = -7.7f;
+        separacionHorizontal = -0.093f;
+        OrganizarHorizontalmente();
+
+#if UNITY_EDITOR
+        //Medidas 16:9
+        //posicionXPrimeraBarra = -8.28f;
+        //separacionHorizontal = 0.078f;
+#endif
+
+#if UNITY_ANDROID
+        //posicionXPrimeraBarra = -7.7f;
+        //separacionHorizontal = -0.093f;
+#endif
     }
 
     private void Start()
